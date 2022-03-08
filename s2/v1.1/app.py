@@ -93,13 +93,14 @@ def create_song():
         content = request.get_json()
         Artist = content['Artist']
         SongTitle = content['SongTitle']
-        OrigArtist = content['OrigArtist'] if 'OrigArtist' in content else None
+        orig_artist = content['orig_artist'] \
+            if 'orig_artist' in content else None
     except Exception:
         return json.dumps({"message": "error reading arguments"})
     url = db['name'] + '/' + db['endpoint'][1]
     payload = {"objtype": "music", "Artist": Artist, "SongTitle": SongTitle}
-    if OrigArtist is not None:
-        payload["OrigArtist"] = OrigArtist
+    if orig_artist is not None:
+        payload["orig_artist"] = orig_artist
     response = requests.post(
         url,
         json=payload,

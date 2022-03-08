@@ -49,7 +49,7 @@ class Music():
         payload = {'Artist': artist,
                    'SongTitle': song}
         if orig_artist is not None:
-            payload['OrigArtist'] = orig_artist
+            payload['orig_artist'] = orig_artist
         r = requests.post(
             self._url,
             json=payload,
@@ -111,9 +111,8 @@ class Music():
             return r.status_code, None, None, None
 
         item = r.json()['Items'][0]
-        OrigArtist = (item['OrigArtist'] if 'OrigArtist' in item
-                      else None)
-        return r.status_code, item['Artist'], item['SongTitle'], OrigArtist
+        orig_artist = (item['orig_artist'] if 'orig_artist' in item else None)
+        return r.status_code, item['Artist'], item['SongTitle'], orig_artist
 
     def read_orig_artist(self, m_id):
         """Read the orginal artist of a song.
